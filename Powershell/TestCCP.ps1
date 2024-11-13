@@ -1,4 +1,5 @@
-#Adding below code to skip tls cert validation
+######### Skip TLS cert validation
+If ("TrustAllCertsPolicy" -as [type]) {} else {
 Add-Type @"
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -12,11 +13,11 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
 "@
 
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
-
+}
 # Set Tls versions
 $allProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $allProtocols
-#End of skiping TLS Valitation part
+######### End of skiping TLS Valitation part
 
 function Get-AIMPassword ([string]$PVWA_URL, [string]$AppID, [string]$Safe, [string]$ObjectName) {
  
